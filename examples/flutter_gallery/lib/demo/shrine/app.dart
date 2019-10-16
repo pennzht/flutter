@@ -44,25 +44,32 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    print('Material App Shrine Built, with context $context !');
-    return MaterialApp(
-      title: 'Shrine',
-      home: HomePage(
-        backdrop: Backdrop(
-          frontLayer: const ProductPage(),
-          backLayer: CategoryMenuPage(onCategoryTap: () => _controller.forward()),
-          frontTitle: const Text('SHRINE'),
-          backTitle: const Text('MENU'),
-          controller: _controller,
-        ),
-        expandingBottomSheet: ExpandingBottomSheet(hideController: _controller),
-      ),
-      initialRoute: '/login',
-      onGenerateRoute: _getRoute,
-      // Copy the platform from the main theme in order to support platform
-      // toggling from the Gallery options menu.
-      theme: _kShrineTheme.copyWith(platform: Theme.of(context).platform),
-    );
+    print('Material App Shrine Built, with context $context!');
+    print('Size from MediaQuery = ${MediaQuery.of(context).size}');
+    return
+      LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          print('Constraints are $constraints');
+          return MaterialApp(
+            title: 'Shrine',
+            home: HomePage(
+              backdrop: Backdrop(
+                frontLayer: const ProductPage(),
+                backLayer: CategoryMenuPage(onCategoryTap: () => _controller.forward()),
+                frontTitle: const Text('SHRINE'),
+                backTitle: const Text('MENU'),
+                controller: _controller,
+              ),
+              expandingBottomSheet: ExpandingBottomSheet(hideController: _controller),
+            ),
+            initialRoute: '/login',
+            onGenerateRoute: _getRoute,
+            // Copy the platform from the main theme in order to support platform
+            // toggling from the Gallery options menu.
+            theme: _kShrineTheme.copyWith(platform: Theme.of(context).platform),
+          );
+        }
+      );
   }
 }
 
