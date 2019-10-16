@@ -44,6 +44,7 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    print('Material App Shrine Built, with context $context !');
     return MaterialApp(
       title: 'Shrine',
       home: HomePage(
