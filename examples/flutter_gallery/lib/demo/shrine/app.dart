@@ -21,6 +21,7 @@ import 'package:flutter_gallery/demo/shrine/expanding_bottom_sheet.dart';
 import 'package:flutter_gallery/demo/shrine/home.dart';
 import 'package:flutter_gallery/demo/shrine/login.dart';
 import 'package:flutter_gallery/demo/shrine/supplemental/cut_corners_border.dart';
+import 'package:flutter_gallery/demo/shrine/layouts.dart';
 
 class ShrineApp extends StatefulWidget {
   @override
@@ -46,30 +47,33 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     print('Material App Shrine Built, with context $context!');
     print('Size from MediaQuery = ${MediaQuery.of(context).size}');
-    return
-      LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          print('Constraints are $constraints');
-          return MaterialApp(
-            title: 'Shrine',
-            home: HomePage(
-              backdrop: Backdrop(
-                frontLayer: const ProductPage(),
-                backLayer: CategoryMenuPage(onCategoryTap: () => _controller.forward()),
-                frontTitle: const Text('SHRINE'),
-                backTitle: const Text('MENU'),
-                controller: _controller,
-              ),
-              expandingBottomSheet: ExpandingBottomSheet(hideController: _controller),
-            ),
-            initialRoute: '/login',
-            onGenerateRoute: _getRoute,
-            // Copy the platform from the main theme in order to support platform
-            // toggling from the Gallery options menu.
-            theme: _kShrineTheme.copyWith(platform: Theme.of(context).platform),
-          );
-        }
-      );
+    return MaterialApp(
+      title: 'Shrine',
+      home: HomePage(
+        backdrop: Backdrop(
+          frontLayer: const ProductPage(),
+          backLayer: CategoryMenuPage(onCategoryTap: () => _controller.forward()),
+          frontTitle: Text('SHRINE · ${layoutOf(context)}!'),
+          backTitle: QText(),
+          controller: _controller,
+        ),
+        expandingBottomSheet: ExpandingBottomSheet(hideController: _controller),
+      ),
+      initialRoute: '/login',
+      onGenerateRoute: _getRoute,
+      // Copy the platform from the main theme in order to support platform
+      // toggling from the Gallery options menu.
+      theme: _kShrineTheme.copyWith(platform: Theme.of(context).platform),
+    );
+  }
+}
+
+class QText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    print('QText with context $context');
+    print('QText MediaQuery is ${MediaQuery.of(context).size}');
+    return const Text('QTEXT MENU');
   }
 }
 
