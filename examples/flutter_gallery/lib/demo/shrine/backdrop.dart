@@ -328,3 +328,36 @@ class _BackdropState extends State<Backdrop> with SingleTickerProviderStateMixin
     );
   }
 }
+
+class DesktopBackdrop extends StatefulWidget {
+  const DesktopBackdrop(
+  {@required this.frontLayer,
+  @required this.backLayer,}
+      );
+
+  final Widget frontLayer;
+  final Widget backLayer;
+
+  @override
+  _DesktopBackdropState createState() => _DesktopBackdropState();
+}
+
+class _DesktopBackdropState extends State<DesktopBackdrop> {
+  @override
+  Widget build (BuildContext context){
+    return Stack(
+      children: <Widget>[
+        widget.backLayer,
+        Padding(
+          child: Material(
+            elevation: 16.0,
+            child: widget.frontLayer,
+            color: Colors.white,
+          ),
+          padding: const EdgeInsets.only(left: 232),
+        )
+      ],
+    );
+  }
+}
+

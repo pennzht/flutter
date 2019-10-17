@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
   }) : super(key: key);
 
   final ExpandingBottomSheet expandingBottomSheet;
-  final Backdrop backdrop;
+  final Widget backdrop;
 
   @override
   Widget build(BuildContext context) {

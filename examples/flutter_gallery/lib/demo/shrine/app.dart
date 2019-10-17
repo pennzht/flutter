@@ -43,20 +43,63 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
     );
   }
 
+  Widget mobileBackdrop() {
+    return Backdrop(
+      frontLayer: const ProductPage(),
+      backLayer: CategoryMenuPage(onCategoryTap: () => _controller.forward()),
+      frontTitle: const Text('SHRINE'),
+      backTitle: const Text('MENU'),
+      controller: _controller,
+    );
+  }
+
+  Widget desktopBackdrop() {
+    return DesktopBackdrop(
+      frontLayer: const ProductPage(),
+      backLayer: Container(
+        color: kShrinePink100,
+        width: 232,
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 64),
+            Image.asset('packages/shrine_images/diamond.png'),
+            const SizedBox(height: 16),
+            Text(
+              'SHRINE',
+              style: Theme.of(context).textTheme.headline,
+            ),
+            Expanded(flex: 1, child: Container()),
+            Text('Category 1', style: Theme.of(context).textTheme.caption),
+            const SizedBox(height: 31),
+            Text('Category 2', style: Theme.of(context).textTheme.caption),
+            const SizedBox(height: 31),
+            Text('Category 3', style: Theme.of(context).textTheme.caption),
+            Expanded(flex: 1, child: Container()),
+            Icon(Icons.search),
+            const SizedBox(height: 72),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     print('Material App Shrine Built, with context $context!');
     print('Size from MediaQuery = ${MediaQuery.of(context).size}');
+    Widget backdrop;
+    switch (layoutOf(context)) {
+      case DeviceLayout.desktop:
+        backdrop = desktopBackdrop();
+        break;
+      case DeviceLayout.mobile:
+        backdrop = mobileBackdrop();
+        break;
+    }
     return MaterialApp(
       title: 'Shrine',
       home: HomePage(
-        backdrop: Backdrop(
-          frontLayer: const ProductPage(),
-          backLayer: CategoryMenuPage(onCategoryTap: () => _controller.forward()),
-          frontTitle: Text('SHRINE · ${layoutOf(context)}!'),
-          backTitle: QText(),
-          controller: _controller,
-        ),
+        backdrop: backdrop,
         expandingBottomSheet: ExpandingBottomSheet(hideController: _controller),
       ),
       initialRoute: '/login',
@@ -65,15 +108,6 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
       // toggling from the Gallery options menu.
       theme: _kShrineTheme.copyWith(platform: Theme.of(context).platform),
     );
-  }
-}
-
-class QText extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    print('QText with context $context');
-    print('QText MediaQuery is ${MediaQuery.of(context).size}');
-    return const Text('QTEXT MENU');
   }
 }
 
