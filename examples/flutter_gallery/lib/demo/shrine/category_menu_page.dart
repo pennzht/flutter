@@ -18,6 +18,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_gallery/demo/shrine/colors.dart';
 import 'package:flutter_gallery/demo/shrine/model/app_state_model.dart';
 import 'package:flutter_gallery/demo/shrine/model/product.dart';
+import 'package:flutter_gallery/demo/shrine/layouts.dart';
 
 class CategoryMenuPage extends StatelessWidget {
   const CategoryMenuPage({
@@ -72,14 +73,43 @@ class CategoryMenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.only(top: 40.0),
-        color: kShrinePink100,
-        child: ListView(
-          children: Category.values.map((Category c) => _buildCategory(c, context)).toList(),
-        ),
-      ),
-    );
+    final DeviceLayout layout = layoutOf(context);
+    Widget result;
+    switch(layout) {
+      case DeviceLayout.mobile:
+        result = Center(
+          child: Container(
+            padding: const EdgeInsets.only(top: 40.0),
+            color: kShrinePink100,
+            child: ListView(
+              children: Category.values.map((Category c) => _buildCategory(c, context)).toList(),
+            ),
+          ),
+        );
+        break;
+      case DeviceLayout.desktop:
+        result = Container(
+          color: kShrinePink100,
+          width: 232,
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 64),
+              Image.asset('packages/shrine_images/diamond.png'),
+              const SizedBox(height: 16),
+              Text(
+                'SHRINE',
+                style: Theme.of(context).textTheme.headline,
+              ),
+              Expanded(flex: 1, child: Container()),
+              ...(Category.values.map((Category c) => _buildCategory(c, context)).toList()),
+              Expanded(flex: 1, child: Container()),
+              Icon(Icons.search),
+              const SizedBox(height: 72),
+            ],
+          ),
+        );
+        break;
+    }
+    return result;
   }
 }

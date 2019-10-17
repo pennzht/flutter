@@ -56,30 +56,7 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
   Widget desktopBackdrop() {
     return DesktopBackdrop(
       frontLayer: const ProductPage(),
-      backLayer: Container(
-        color: kShrinePink100,
-        width: 232,
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 64),
-            Image.asset('packages/shrine_images/diamond.png'),
-            const SizedBox(height: 16),
-            Text(
-              'SHRINE',
-              style: Theme.of(context).textTheme.headline,
-            ),
-            Expanded(flex: 1, child: Container()),
-            Text('Category 1', style: Theme.of(context).textTheme.caption),
-            const SizedBox(height: 31),
-            Text('Category 2', style: Theme.of(context).textTheme.caption),
-            const SizedBox(height: 31),
-            Text('Category 3', style: Theme.of(context).textTheme.caption),
-            Expanded(flex: 1, child: Container()),
-            Icon(Icons.search),
-            const SizedBox(height: 72),
-          ],
-        ),
-      ),
+      backLayer: CategoryMenuPage(),
     );
   }
 
