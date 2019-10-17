@@ -83,6 +83,8 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
     );
   }
 
+  // CategoryMenuPage(onCategoryTap: null),
+
   @override
   Widget build(BuildContext context) {
     print('Material App Shrine Built, with context $context!');

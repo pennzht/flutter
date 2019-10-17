@@ -72,14 +72,12 @@ class CategoryMenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
+    return Container(
         padding: const EdgeInsets.only(top: 40.0),
         color: kShrinePink100,
         child: ListView(
           children: Category.values.map((Category c) => _buildCategory(c, context)).toList(),
         ),
-      ),
     );
   }
 }
