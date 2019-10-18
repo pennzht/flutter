@@ -101,9 +101,10 @@ class MobileProductCard extends StatelessWidget {
 
 
 class DesktopProductCard extends StatelessWidget {
-  const DesktopProductCard({ this.product });
+  const DesktopProductCard({ this.product, @required this.imageWidth });
 
   final Product product;
+  final double imageWidth;
 
   static const double kTextBoxHeight = 65.0;
 
@@ -123,12 +124,11 @@ class DesktopProductCard extends StatelessWidget {
 
     // final double imageScale = 186.0 / imagePrototype.width;
     print('product is ${product.assetName} with width ${imagePrototype.width}');
-    final double imageScale = 1;
 
     final Image imageWidget = Image.asset(
       product.assetName,
       package: product.assetPackage,
-      scale: imageScale,
+      width: imageWidth,
     );
 
     return ScopedModelDescendant<AppStateModel>(

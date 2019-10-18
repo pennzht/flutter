@@ -104,13 +104,16 @@ class DesktopAsymmetricView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget _gap = Container(width: 24);
+    final Widget _flex = Expanded(flex: 1, child: Container());
 
     return ListView(
       scrollDirection: Axis.vertical,
       children: <Widget>[
+        Container(height: 60),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            _flex,
             DesktopProductCardColumn(columnCount: 4, currentColumn: 0, products: products),
             _gap,
             DesktopProductCardColumn(columnCount: 4, currentColumn: 1, products: products),
@@ -118,8 +121,10 @@ class DesktopAsymmetricView extends StatelessWidget {
             DesktopProductCardColumn(columnCount: 4, currentColumn: 2, products: products),
             _gap,
             DesktopProductCardColumn(columnCount: 4, currentColumn: 3, products: products),
+            _flex,
           ],
         ),
+        Container(height: 60),
       ],
       physics: const AlwaysScrollableScrollPhysics(),
     );

@@ -53,16 +53,21 @@ class DesktopProductCardColumn extends StatelessWidget {
       return Container(
         width: 186,
         child: Column(
+          crossAxisAlignment:
+            (currentColumn % 2 == 0) ? CrossAxisAlignment.start : CrossAxisAlignment.end,
           children: <Widget>[
             if (currentColumn % 2 == 1) Container(height: 84),
             ... (List<Widget>.generate(currentColumnWidgetCount, (int index) {
               if (index % 2 == 0) {
                 return DesktopProductCard(
                   product: products[(index ~/ 2) * columnCount + currentColumn],
+                  imageWidth:
+                  (currentColumn % 2 == 0) ? (((index ~/ 2) % 2 == 0) ? 162 : 186)
+                                           : (((index ~/ 2) % 2 == 0) ? 186 : 162),
                 );
               } else {
                 return Container(
-                  height: 24,
+                  height: 84,
                 );
               }
             })),
