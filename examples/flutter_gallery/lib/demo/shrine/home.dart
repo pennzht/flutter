@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:flutter_gallery/demo/shrine/backdrop.dart';
+import 'package:flutter_gallery/demo/shrine/layouts.dart';
 import 'package:flutter_gallery/demo/shrine/expanding_bottom_sheet.dart';
 import 'package:flutter_gallery/demo/shrine/model/app_state_model.dart';
 import 'package:flutter_gallery/demo/shrine/model/product.dart';
@@ -30,7 +31,14 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppStateModel>(
       builder: (BuildContext context, Widget child, AppStateModel model) {
-        return MobileAsymmetricView(products: model.getProducts());
+        switch (layoutOf(context)) {
+          case DeviceLayout.mobile:
+            return MobileAsymmetricView(products: model.getProducts());
+            break;
+          case DeviceLayout.desktop:
+            return DesktopAsymmetricView(products: model.getProducts());
+            break;
+        }
       });
   }
 }

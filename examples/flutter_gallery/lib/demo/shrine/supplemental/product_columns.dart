@@ -31,7 +31,7 @@ class TwoProductCardColumn extends StatelessWidget {
       const double spacerHeight = 44.0;
 
       final double heightOfCards = (constraints.biggest.height - spacerHeight) / 2.0;
-      final double availableHeightForImages = heightOfCards - ProductCard.kTextBoxHeight;
+      final double availableHeightForImages = heightOfCards - MobileProductCard.kTextBoxHeight;
       // Ensure the cards take up the available space as long as the screen is
       // sufficiently tall, otherwise fallback on a constant aspect ratio.
       final double imageAspectRatio = availableHeightForImages >= 0.0
@@ -44,7 +44,7 @@ class TwoProductCardColumn extends StatelessWidget {
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 28.0),
             child: top != null
-              ? ProductCard(
+              ? MobileProductCard(
                   imageAspectRatio: imageAspectRatio,
                   product: top,
                 )
@@ -55,7 +55,7 @@ class TwoProductCardColumn extends StatelessWidget {
           const SizedBox(height: spacerHeight),
           Padding(
             padding: const EdgeInsetsDirectional.only(end: 28.0),
-            child: ProductCard(
+            child: MobileProductCard(
               imageAspectRatio: imageAspectRatio,
               product: bottom,
             ),
@@ -80,7 +80,7 @@ class OneProductCardColumn extends StatelessWidget {
         const SizedBox(
           height: 40.0,
         ),
-        ProductCard(
+        MobileProductCard(
           product: product,
         ),
       ],

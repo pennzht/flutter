@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gallery/demo/shrine/model/product.dart';
@@ -19,11 +21,14 @@ import 'package:flutter_gallery/demo/shrine/supplemental/product_card.dart';
 
 class DesktopProductCardColumn extends StatelessWidget {
   const DesktopProductCardColumn({
-    @required this.bottom,
-    this.top,
-  }) : assert(bottom != null);
+    @required this.columnCount,
+    @required this.currentColumn,
+    @required this.products,
+  });
 
-  final Product bottom, top;
+  final int columnCount;
+  final int currentColumn;
+  final List<Product> products;
 
   @override
   Widget build(BuildContext context) {
@@ -31,36 +36,38 @@ class DesktopProductCardColumn extends StatelessWidget {
       const double spacerHeight = 44.0;
 
       final double heightOfCards = (constraints.biggest.height - spacerHeight) / 2.0;
-      final double availableHeightForImages = heightOfCards - ProductCard.kTextBoxHeight;
+      final double availableHeightForImages = heightOfCards - MobileProductCard.kTextBoxHeight;
       // Ensure the cards take up the available space as long as the screen is
       // sufficiently tall, otherwise fallback on a constant aspect ratio.
-      final double imageAspectRatio = availableHeightForImages >= 0.0
+      /* final double imageAspectRatio = availableHeightForImages >= 0.0
         ? constraints.biggest.width / availableHeightForImages
-        : 49.0 / 33.0;
+        : 49.0 / 33.0; */
+      const double imageAspectRatio = 49.0 / 33.0;
 
-      return ListView(
-        physics: const ClampingScrollPhysics(),
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsetsDirectional.only(start: 28.0),
-            child: top != null
-              ? ProductCard(
-                  imageAspectRatio: imageAspectRatio,
-                  product: top,
-                )
-              : SizedBox(
-                  height: heightOfCards > 0 ? heightOfCards : spacerHeight,
-                ),
-          ),
-          const SizedBox(height: spacerHeight),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(end: 28.0),
-            child: ProductCard(
-              imageAspectRatio: imageAspectRatio,
-              product: bottom,
-            ),
-          ),
-        ],
+      final int currentColumnProductCount = (products.length - currentColumn - 1) ~/ columnCount + 1;
+      final int currentColumnWidgetCount = max(2 * currentColumnProductCount - 1, 0);
+
+      print('currentcolumn = $currentColumn');
+      print('currentcolumnProductCount = $currentColumnProductCount');
+
+      return Container(
+        width: 186,
+        child: Column(
+          children: <Widget>[
+            if (currentColumn % 2 == 1) Container(height: 84),
+            ... (List<Widget>.generate(currentColumnWidgetCount, (int index) {
+              if (index % 2 == 0) {
+                return DesktopProductCard(
+                  product: products[(index ~/ 2) * columnCount + currentColumn],
+                );
+              } else {
+                return Container(
+                  height: 24,
+                );
+              }
+            })),
+          ],
+        ),
       );
     });
   }

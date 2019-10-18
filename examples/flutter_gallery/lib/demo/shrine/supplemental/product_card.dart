@@ -19,8 +19,8 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_gallery/demo/shrine/model/app_state_model.dart';
 import 'package:flutter_gallery/demo/shrine/model/product.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({ this.imageAspectRatio = 33 / 49, this.product })
+class MobileProductCard extends StatelessWidget {
+  const MobileProductCard({ this.imageAspectRatio = 33 / 49, this.product })
       : assert(imageAspectRatio == null || imageAspectRatio > 0);
 
   final double imageAspectRatio;
@@ -95,3 +95,89 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+class DesktopProductCard extends StatelessWidget {
+  const DesktopProductCard({ this.product });
+
+  final Product product;
+
+  static const double kTextBoxHeight = 65.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final NumberFormat formatter = NumberFormat.simpleCurrency(
+      decimalDigits: 0,
+      locale: Localizations.localeOf(context).toString(),
+    );
+
+    final ThemeData theme = Theme.of(context);
+
+    final Image imagePrototype = Image.asset(
+      product.assetName,
+      package: product.assetPackage,
+    );
+
+    // final double imageScale = 186.0 / imagePrototype.width;
+    print('product is ${product.assetName} with width ${imagePrototype.width}');
+    final double imageScale = 1;
+
+    final Image imageWidget = Image.asset(
+      product.assetName,
+      package: product.assetPackage,
+      scale: imageScale,
+    );
+
+    return ScopedModelDescendant<AppStateModel>(
+      builder: (BuildContext context, Widget child, AppStateModel model) {
+        return GestureDetector(
+          onTap: () {
+            model.addProductToCart(product.id);
+          },
+          child: child,
+        );
+      },
+      child: Stack(
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              imageWidget,
+              SizedBox(
+                height: kTextBoxHeight * MediaQuery.of(context).textScaleFactor,
+                width: 121.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      product == null ? '' : product.name,
+                      style: theme.textTheme.button,
+                      softWrap: false,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 4.0),
+                    Text(
+                      product == null ? '' : formatter.format(product.price),
+                      style: theme.textTheme.caption,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Icon(Icons.add_shopping_cart),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_gallery/demo/shrine/model/product.dart';
 import 'package:flutter_gallery/demo/shrine/supplemental/product_columns.dart';
+import 'package:flutter_gallery/demo/shrine/supplemental/desktop_product_columns.dart';
 
 class MobileAsymmetricView extends StatelessWidget {
   const MobileAsymmetricView({Key key, this.products}) : super(key: key);
@@ -100,54 +101,26 @@ class DesktopAsymmetricView extends StatelessWidget {
 
   final List<Product> products;
 
-  List<Container> _buildColumns(BuildContext context) {
-    if (products == null || products.isEmpty) {
-      return const <Container>[];
-    }
-
-    // This will return a list of columns. It will oscillate between the two
-    // kinds of columns. Even cases of the index (0, 2, 4, etc) will be
-    // TwoProductCardColumn and the odd cases will be OneProductCardColumn.
-    //
-    // Each pair of columns will advance us 3 products forward (2 + 1). That's
-    // some kinda awkward math so we use _evenCasesIndex and _oddCasesIndex as
-    // helpers for creating the index of the product list that will correspond
-    // to the index of the list of columns.
-    return List<Container>.generate(_listItemCount(products.length), (int index) {
-      double width = .59 * MediaQuery.of(context).size.width;
-      Widget column;
-      if (index % 2 == 0) {
-        /// Even cases
-        final int bottom = _evenCasesIndex(index);
-        column = TwoProductCardColumn(
-          bottom: products[bottom],
-          top: products.length - 1 >= bottom + 1
-              ? products[bottom + 1]
-              : null,
-        );
-        width += 32.0;
-      } else {
-        /// Odd cases
-        column = OneProductCardColumn(
-          product: products[_oddCasesIndex(index)],
-        );
-      }
-      return Container(
-        width: width,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: column,
-        ),
-      );
-    }).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final Widget _gap = Container(width: 24);
+
     return ListView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.fromLTRB(0.0, 34.0, 16.0, 44.0),
-      children: _buildColumns(context),
+      scrollDirection: Axis.vertical,
+      children: <Widget>[
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            DesktopProductCardColumn(columnCount: 4, currentColumn: 0, products: products),
+            _gap,
+            DesktopProductCardColumn(columnCount: 4, currentColumn: 1, products: products),
+            _gap,
+            DesktopProductCardColumn(columnCount: 4, currentColumn: 2, products: products),
+            _gap,
+            DesktopProductCardColumn(columnCount: 4, currentColumn: 3, products: products),
+          ],
+        ),
+      ],
       physics: const AlwaysScrollableScrollPhysics(),
     );
   }
