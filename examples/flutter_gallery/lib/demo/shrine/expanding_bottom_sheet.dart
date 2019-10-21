@@ -20,6 +20,7 @@ import 'package:meta/meta.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:flutter_gallery/demo/shrine/colors.dart';
+import 'package:flutter_gallery/demo/shrine/layouts.dart';
 import 'package:flutter_gallery/demo/shrine/model/app_state_model.dart';
 import 'package:flutter_gallery/demo/shrine/model/product.dart';
 import 'package:flutter_gallery/demo/shrine/shopping_cart.dart';
@@ -332,8 +333,18 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
 
+    double expandedCartWidth;
+    switch (layoutOf(context)) {
+      case DeviceLayout.mobile:
+        expandedCartWidth = screenWidth;
+        break;
+      case DeviceLayout.desktop:
+        expandedCartWidth = 360;
+        break;
+    }
+
     _width = _widthFor(numProducts);
-    _widthAnimation = _getWidthAnimation(screenWidth);
+    _widthAnimation = _getWidthAnimation(expandedCartWidth);
     _heightAnimation = _getHeightAnimation(screenHeight);
     _shapeAnimation = _getShapeAnimation();
     _thumbnailOpacityAnimation = _getThumbnailOpacityAnimation();
