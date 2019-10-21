@@ -46,11 +46,13 @@ class ProductPage extends StatelessWidget {
 class HomePage extends StatelessWidget {
   const HomePage({
     this.expandingBottomSheet,
+    this.scrim,
     this.backdrop,
     Key key,
   }) : super(key: key);
 
   final ExpandingBottomSheet expandingBottomSheet;
+  final Widget scrim;
   final Widget backdrop;
 
   @override
@@ -58,6 +60,7 @@ class HomePage extends StatelessWidget {
     return Stack(
       children: <Widget>[
         backdrop,
+        scrim,
         Align(child: expandingBottomSheet, alignment: Alignment.bottomRight),
       ],
     );

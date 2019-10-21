@@ -79,6 +79,7 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
       title: 'Shrine',
       home: HomePage(
         backdrop: backdrop,
+        scrim: Scrim(controller: _controller),
         expandingBottomSheet: ExpandingBottomSheet(hideController: _controller),
       ),
       initialRoute: '/login',
