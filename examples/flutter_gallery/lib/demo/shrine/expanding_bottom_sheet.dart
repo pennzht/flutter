@@ -33,8 +33,10 @@ const double _kPeakVelocityTime = 0.248210;
 // Percent (as a decimal) of animation that should be completed at _peakVelocityTime
 const double _kPeakVelocityProgress = 0.379146;
 const double _kCartHeight = 56.0;
-// Radius of the shape on the top left of the sheet.
-const double _kCornerRadius = 24.0;
+// Radius of the shape on the top left of the sheet for mobile layouts.
+const double _kMobileCornerRadius = 24.0;
+// Radius of the shape on the top left and bottom left of the sheet for mobile layouts.
+const double _kDesktopCornerRadius = 12.0;
 // Width for just the cart icon and no thumbnails.
 const double _kWidthForCartIcon = 64.0;
 
@@ -133,7 +135,8 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
   Animation<double> _heightAnimation;
   Animation<double> _thumbnailOpacityAnimation;
   Animation<double> _cartOpacityAnimation;
-  Animation<double> _shapeAnimation;
+  Animation<double> _topLeftShapeAnimation;
+  Animation<double> _bottomLeftShapeAnimation;
   Animation<Offset> _slideAnimation;
 
   @override
@@ -199,10 +202,19 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
     }
   }
 
-  // Animation of the cut corner. It's cut when closed and not cut when open.
-  Animation<double> _getShapeAnimation() {
+  // Animation of the top-left cut corner. It's cut when closed and not cut when open.
+  Animation<double> _getShapeTopLeftAnimation(DeviceLayout layout) {
+    double cornerRadius;
+    switch (layout) {
+      case DeviceLayout.mobile:
+        cornerRadius = _kMobileCornerRadius;
+        break;
+      case DeviceLayout.desktop:
+        cornerRadius = _kDesktopCornerRadius;
+        break;
+    }
     if (_controller.status == AnimationStatus.forward) {
-      return Tween<double>(begin: _kCornerRadius, end: 0.0).animate(
+      return Tween<double>(begin: cornerRadius, end: 0.0).animate(
         CurvedAnimation(
           parent: _controller.view,
           curve: const Interval(0.0, 0.3, curve: Curves.fastOutSlowIn),
@@ -210,8 +222,37 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
       );
     } else {
       return _getEmphasizedEasingAnimation(
-        begin: _kCornerRadius,
-        peak: _getPeakPoint(begin: _kCornerRadius, end: 0.0),
+        begin: cornerRadius,
+        peak: _getPeakPoint(begin: cornerRadius, end: 0.0),
+        end: 0.0,
+        isForward: false,
+        parent: _controller.view,
+      );
+    }
+  }
+
+  // Animation of the bottom-left cut corner. It's cut when closed and not cut when open.
+  Animation<double> _getShapeBottomLeftAnimation(DeviceLayout layout) {
+    double cornerRadius;
+    switch (layout) {
+      case DeviceLayout.mobile:
+        cornerRadius = 0.0;
+        break;
+      case DeviceLayout.desktop:
+        cornerRadius = _kDesktopCornerRadius;
+        break;
+    }
+    if (_controller.status == AnimationStatus.forward) {
+      return Tween<double>(begin: cornerRadius, end: 0.0).animate(
+        CurvedAnimation(
+          parent: _controller.view,
+          curve: const Interval(0.0, 0.3, curve: Curves.fastOutSlowIn),
+        ),
+      );
+    } else {
+      return _getEmphasizedEasingAnimation(
+        begin: cornerRadius,
+        peak: _getPeakPoint(begin: cornerRadius, end: 0.0),
         end: 0.0,
         isForward: false,
         parent: _controller.view,
@@ -346,7 +387,8 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
     _width = _widthFor(numProducts);
     _widthAnimation = _getWidthAnimation(expandedCartWidth);
     _heightAnimation = _getHeightAnimation(screenHeight);
-    _shapeAnimation = _getShapeAnimation();
+    _topLeftShapeAnimation = _getShapeTopLeftAnimation(layoutOf(context));
+    _bottomLeftShapeAnimation = _getShapeBottomLeftAnimation(layoutOf(context));
     _thumbnailOpacityAnimation = _getThumbnailOpacityAnimation();
     _cartOpacityAnimation = _getCartOpacityAnimation();
 
@@ -360,7 +402,8 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
           animationDuration: const Duration(milliseconds: 0),
           shape: BeveledRectangleBorder(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(_shapeAnimation.value),
+              topLeft: Radius.circular(_topLeftShapeAnimation.value),
+              bottomLeft: Radius.circular(_bottomLeftShapeAnimation.value),
             ),
           ),
           elevation: 4.0,
