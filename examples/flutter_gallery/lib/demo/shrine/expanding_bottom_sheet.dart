@@ -329,6 +329,7 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
   bool get _cartIsVisible => _thumbnailOpacityAnimation.value == 0.0;
 
   Widget _buildThumbnails(int numProducts) {
+    print('from _buildThumbNails: ${_thumbnailOpacityAnimation.value}');
     return ExcludeSemantics(
       child: Opacity(
         opacity: _thumbnailOpacityAnimation.value,
@@ -446,6 +447,7 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
 
   @override
   Widget build(BuildContext context) {
+    print('from expanding_bottom_sheet.dart: ${widget.hideController.value}');
     return AnimatedSize(
       key: _expandingBottomSheetKey,
       duration: const Duration(milliseconds: 225),

@@ -19,9 +19,10 @@ import 'package:flutter_gallery/demo/shrine/category_menu_page.dart';
 import 'package:flutter_gallery/demo/shrine/colors.dart';
 import 'package:flutter_gallery/demo/shrine/expanding_bottom_sheet.dart';
 import 'package:flutter_gallery/demo/shrine/home.dart';
-import 'package:flutter_gallery/demo/shrine/login.dart';
-import 'package:flutter_gallery/demo/shrine/supplemental/cut_corners_border.dart';
 import 'package:flutter_gallery/demo/shrine/layouts.dart';
+import 'package:flutter_gallery/demo/shrine/login.dart';
+import 'package:flutter_gallery/demo/shrine/scrim.dart';
+import 'package:flutter_gallery/demo/shrine/supplemental/cut_corners_border.dart';
 
 class ShrineApp extends StatefulWidget {
   @override

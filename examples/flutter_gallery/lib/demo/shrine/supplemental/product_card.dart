@@ -123,7 +123,7 @@ class DesktopProductCard extends StatelessWidget {
     );
 
     // final double imageScale = 186.0 / imagePrototype.width;
-    print('product is ${product.assetName} with width ${imagePrototype.width}');
+    // print('product is ${product.assetName} with width ${imagePrototype.width}');
 
     final Image imageWidget = Image.asset(
       product.assetName,
