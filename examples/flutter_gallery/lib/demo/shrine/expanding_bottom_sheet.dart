@@ -41,11 +41,13 @@ const double _kDesktopCornerRadius = 12.0;
 const double _kWidthForCartIcon = 64.0;
 
 class ExpandingBottomSheet extends StatefulWidget {
-  const ExpandingBottomSheet({Key key, @required this.hideController})
+  const ExpandingBottomSheet({Key key, @required this.hideController, @required this.expandingController})
       : assert(hideController != null),
+        assert(expandingController != null),
         super(key: key);
 
   final AnimationController hideController;
+  final AnimationController expandingController;
 
   @override
   _ExpandingBottomSheetState createState() => _ExpandingBottomSheetState();
@@ -128,7 +130,7 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
   double _width = _kWidthForCartIcon;
 
   // Controller for the opening and closing of the ExpandingBottomSheet
-  AnimationController _controller;
+  AnimationController get _controller => widget.expandingController;
 
   // Animations for the opening and closing of the ExpandingBottomSheet
   Animation<double> _widthAnimation;
@@ -142,15 +144,10 @@ class _ExpandingBottomSheetState extends State<ExpandingBottomSheet> with Ticker
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 

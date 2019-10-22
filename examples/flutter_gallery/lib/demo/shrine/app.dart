@@ -29,10 +29,13 @@ class ShrineApp extends StatefulWidget {
   _ShrineAppState createState() => _ShrineAppState();
 }
 
-class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMixin {
+class _ShrineAppState extends State<ShrineApp> with TickerProviderStateMixin {
   // Controller to coordinate both the opening/closing of backdrop and sliding
   // of expanding bottom sheet
   AnimationController _controller;
+
+  // Animation Controller for expanding/collapsing the cart menu.
+  AnimationController _expandingController;
 
   @override
   void initState() {
@@ -42,6 +45,11 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
       duration: const Duration(milliseconds: 450),
       value: 1.0,
     );
+    _expandingController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    print('_controller = $_controller\n_expandingController = $_expandingController');
   }
 
   Widget mobileBackdrop() {
@@ -67,6 +75,8 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     print('Material App Shrine Built, with context $context!');
     print('Size from MediaQuery = ${MediaQuery.of(context).size}');
+    print('My controller is ${_controller}');
+    print('My expandingController is ${_expandingController}');
     Widget backdrop;
     switch (layoutOf(context)) {
       case DeviceLayout.desktop:
@@ -80,8 +90,8 @@ class _ShrineAppState extends State<ShrineApp> with SingleTickerProviderStateMix
       title: 'Shrine',
       home: HomePage(
         backdrop: backdrop,
-        scrim: Scrim(controller: _controller),
-        expandingBottomSheet: ExpandingBottomSheet(hideController: _controller),
+        scrim: Scrim(controller: _expandingController),
+        expandingBottomSheet: ExpandingBottomSheet(hideController: _controller, expandingController: _expandingController),
       ),
       initialRoute: '/login',
       onGenerateRoute: _getRoute,
