@@ -25,9 +25,7 @@ class _ScrimState extends State<Scrim> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('Scrim.widget.controller = ${widget.controller}');
     final Size deviceSize = MediaQuery.of(context).size;
-    print('Scrim.widget.controller.value = ${widget.controller.value}');
     return AnimatedBuilder(
       animation: widget.controller,
       builder: (BuildContext context, Widget child) {

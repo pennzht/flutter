@@ -49,7 +49,6 @@ class _ShrineAppState extends State<ShrineApp> with TickerProviderStateMixin {
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    print('_controller = $_controller\n_expandingController = $_expandingController');
   }
 
   Widget mobileBackdrop() {
@@ -73,10 +72,6 @@ class _ShrineAppState extends State<ShrineApp> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('Material App Shrine Built, with context $context!');
-    print('Size from MediaQuery = ${MediaQuery.of(context).size}');
-    print('My controller is ${_controller}');
-    print('My expandingController is ${_expandingController}');
     Widget backdrop;
     switch (layoutOf(context)) {
       case DeviceLayout.desktop:
