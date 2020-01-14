@@ -8,13 +8,20 @@ class ContrastRatioDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: MergeSemantics(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const <Widget>[
-              Text('I am text one'),
-              Text('And I am text two'),
+              Text(
+                'I am text one',
+                style: TextStyle(color: Colors.black),
+              ),
+              Text(
+                'And I am text two',
+                style: TextStyle(color: Colors.black),
+              ),
             ],
           ),
         ),
