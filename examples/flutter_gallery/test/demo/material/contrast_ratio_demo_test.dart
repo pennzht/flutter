@@ -9,24 +9,24 @@ void main() {
   testWidgets('Unmerged good demo.', (WidgetTester tester) async {
     await tester.pumpWidget(ContrastRatioDemoUnmergedGood());
 
-    expect(tester, meetsGuideline(textContrastGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
   });
 
   testWidgets('Unmerged bad demo.', (WidgetTester tester) async {
     await tester.pumpWidget(ContrastRatioDemoUnmergedBad());
 
-    expect(tester, meetsGuideline(textContrastGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
   });
 
   testWidgets('Merged good demo.', (WidgetTester tester) async {
     await tester.pumpWidget(ContrastRatioDemoMergedGood());
 
-    expect(tester, meetsGuideline(textContrastGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
   });
 
   testWidgets('Merged bad demo.', (WidgetTester tester) async {
     await tester.pumpWidget(ContrastRatioDemoMergedBad());
 
-    expect(tester, meetsGuideline(textContrastGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
   });
 }
