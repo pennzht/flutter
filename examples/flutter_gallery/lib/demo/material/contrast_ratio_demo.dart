@@ -1,0 +1,24 @@
+// Copyright 2014 The Flutter Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+import 'package:flutter/material.dart';
+
+class ContrastRatioDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: MergeSemantics(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const <Widget>[
+              Text('I am text one'),
+              Text('And I am text two'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
