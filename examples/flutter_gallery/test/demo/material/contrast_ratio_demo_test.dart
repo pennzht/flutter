@@ -7,7 +7,7 @@ import 'package:flutter_gallery/demo/material/contrast_ratio_demo.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Drawer header does not scroll', (WidgetTester tester) async {
+  testWidgets('Contrast ratio is correct.', (WidgetTester tester) async {
     await tester.pumpWidget(ContrastRatioDemo());
 
     expect(tester, meetsGuideline(textContrastGuideline));
