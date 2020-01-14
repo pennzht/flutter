@@ -17,11 +17,11 @@ class ContrastRatioDemo extends StatelessWidget {
               children: const <Widget>[
                 Text(
                   'I am text one',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                 ),
                 Text(
                   'And I am text two',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                 ),
               ],
             ),
