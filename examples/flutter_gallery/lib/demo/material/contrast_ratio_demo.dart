@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 
+/// A simple app with black text on white background.
+/// Passes the test, which is expected.
 class ContrastRatioDemoUnmergedGood extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,8 @@ class ContrastRatioDemoUnmergedGood extends StatelessWidget {
   }
 }
 
+/// A simple app with white text on white background.
+/// Fails the test, which is expected.
 class ContrastRatioDemoUnmergedBad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -56,6 +60,9 @@ class ContrastRatioDemoUnmergedBad extends StatelessWidget {
   }
 }
 
+/// A simple app with black text on white background,
+/// using [MergeSemantics].
+/// Passes the test, which is expected.
 class ContrastRatioDemoMergedGood extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -84,6 +91,12 @@ class ContrastRatioDemoMergedGood extends StatelessWidget {
   }
 }
 
+/// A simple app with white text on white background,
+/// using [MergeSemantics].
+/// Passes the test, which is NOT expected.
+///
+/// This app does NOT satisfy WCAG guidelines, but is not caught
+/// by [textContrastGuideline].
 class ContrastRatioDemoMergedBad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
