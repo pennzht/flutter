@@ -36,6 +36,34 @@ void main() {
       handle.dispose();
     });
 
+    testWidgets('black text on white background with merge semantics', (WidgetTester tester) async {
+      final SemanticsHandle handle = tester.ensureSemantics();
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          backgroundColor: Colors.white,
+          body: Center(
+            child: MergeSemantics(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  Text(
+                    'I am text one',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  Text(
+                    'And I am text two',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ));
+
+      await expectLater(tester, meetsGuideline(textContrastGuideline));
+      handle.dispose();
+    });
 
     testWidgets('black text on white background - Text Widget - direct style', (WidgetTester tester) async {
       final SemanticsHandle handle = tester.ensureSemantics();
