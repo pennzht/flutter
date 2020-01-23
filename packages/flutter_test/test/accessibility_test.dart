@@ -645,6 +645,30 @@ void main() {
     handle.dispose();
   });
 
+  testWidgets('detects wrong text widget', (WidgetTester tester) async {
+    final SemanticsHandle handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: Column(
+                children: <Widget>[
+                  ExcludeSemantics(
+                    child: const Text('One', style: TextStyle(color: Colors.black))
+                  ),
+                  const SizedBox(height: 30),
+                  const Text('One', style: TextStyle(color: Colors.white)),
+                ],
+              ),
+            ),
+          ),
+        ));
+    await expectLater(tester, doesNotMeetGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
 }
 
 Widget _boilerplate(Widget child) {
