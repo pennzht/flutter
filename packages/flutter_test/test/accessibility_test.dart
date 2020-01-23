@@ -552,11 +552,11 @@ void main() {
               child: Column(
                 children: <Widget>[
                   ExcludeSemantics(
-                    child: Text('Black', style: TextStyle(color: Colors.white)),
+                    child: const Text('One', style: TextStyle(color: Colors.white)),
                   ),
-                  SizedBox(height: 30),
-                  MergeSemantics(
-                    child: Text('Black', style: TextStyle(color: Colors.black)),
+                  const SizedBox(height: 30),
+                  const MergeSemantics(
+                    child: Text('One', style: TextStyle(color: Colors.black)),
                   )
                 ],
               ),
@@ -578,11 +578,11 @@ void main() {
               child: Column(
                 children: <Widget>[
                   ExcludeSemantics(
-                    child: Text('White', style: TextStyle(color: Colors.white)),
+                    child: const Text('Two', style: TextStyle(color: Colors.white)),
                   ),
-                  SizedBox(height: 30),
-                  MergeSemantics(
-                    child: Text('Black', style: TextStyle(color: Colors.black)),
+                  const SizedBox(height: 30),
+                  const MergeSemantics(
+                    child: Text('One', style: TextStyle(color: Colors.black)),
                   )
                 ],
               ),
@@ -604,11 +604,11 @@ void main() {
               child: Column(
                 children: <Widget>[
                   ExcludeSemantics(
-                    child: FlatButton(child: Text('Black'), onPressed: null),
+                    child: FlatButton(child: const Text('One'), onPressed: null),
                   ),
-                  SizedBox(height: 30),
-                  MergeSemantics(
-                    child: Text('Black', style: TextStyle(color: Colors.black)),
+                  const SizedBox(height: 30),
+                  const MergeSemantics(
+                    child: Text('One', style: TextStyle(color: Colors.black)),
                   )
                 ],
               ),
@@ -630,11 +630,11 @@ void main() {
               child: Column(
                 children: <Widget>[
                   ExcludeSemantics(
-                    child: FlatButton(child: Text('White'), onPressed: null),
+                    child: FlatButton(child: const Text('Two'), onPressed: null),
                   ),
-                  SizedBox(height: 30),
-                  MergeSemantics(
-                    child: Text('Black', style: TextStyle(color: Colors.black)),
+                  const SizedBox(height: 30),
+                  const MergeSemantics(
+                    child: Text('One', style: TextStyle(color: Colors.black)),
                   )
                 ],
               ),
