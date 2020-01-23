@@ -470,6 +470,181 @@ void main() {
     await expectLater(tester, meetsGuideline(textContrastGuideline));
     handle.dispose();
   });
+
+  testWidgets('white text on white', (WidgetTester tester) async {
+    final SemanticsHandle handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: MergeSemantics(
+                child: Column(
+                  children: const <Widget>[
+                    Text('White', style: TextStyle(color: Colors.white)),
+                  ]
+                ),
+              ),
+            ),
+          ),
+        ));
+    await expectLater(tester, doesNotMeetGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('white and black text on white', (WidgetTester tester) async {
+    final SemanticsHandle handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: MergeSemantics(
+                child: Column(
+                  children: const <Widget>[
+                    Text('White', style: TextStyle(color: Colors.white)),
+                    SizedBox(height: 30),
+                    Text('Black', style: TextStyle(color: Colors.black)),
+                  ]
+                ),
+              ),
+            ),
+          ),
+        ));
+    await expectLater(tester, doesNotMeetGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('black and white text on white', (WidgetTester tester) async {
+    final SemanticsHandle handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: MergeSemantics(
+                child: Column(
+                  children: const <Widget>[
+                    Text('Black', style: TextStyle(color: Colors.black)),
+                    SizedBox(height: 30),
+                    Text('White', style: TextStyle(color: Colors.white)),
+                  ]
+                ),
+              ),
+            ),
+          ),
+        ));
+    await expectLater(tester, doesNotMeetGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('irrelevant text', (WidgetTester tester) async {
+    final SemanticsHandle handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: Column(
+                children: <Widget>[
+                  ExcludeSemantics(
+                    child: Text('Black', style: TextStyle(color: Colors.white)),
+                  ),
+                  SizedBox(height: 30),
+                  MergeSemantics(
+                    child: Text('Black', style: TextStyle(color: Colors.black)),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('irrelevant text - passing', (WidgetTester tester) async {
+    final SemanticsHandle handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: Column(
+                children: <Widget>[
+                  ExcludeSemantics(
+                    child: Text('White', style: TextStyle(color: Colors.white)),
+                  ),
+                  SizedBox(height: 30),
+                  MergeSemantics(
+                    child: Text('Black', style: TextStyle(color: Colors.black)),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('irrelevant button', (WidgetTester tester) async {
+    final SemanticsHandle handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: Column(
+                children: <Widget>[
+                  ExcludeSemantics(
+                    child: FlatButton(child: Text('Black'), onPressed: null),
+                  ),
+                  SizedBox(height: 30),
+                  MergeSemantics(
+                    child: Text('Black', style: TextStyle(color: Colors.black)),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('irrelevant button - passing', (WidgetTester tester) async {
+    final SemanticsHandle handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData.light(),
+          home: Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: Column(
+                children: <Widget>[
+                  ExcludeSemantics(
+                    child: FlatButton(child: Text('White'), onPressed: null),
+                  ),
+                  SizedBox(height: 30),
+                  MergeSemantics(
+                    child: Text('Black', style: TextStyle(color: Colors.black)),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
 }
 
 Widget _boilerplate(Widget child) {
