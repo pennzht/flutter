@@ -645,7 +645,7 @@ void main() {
     handle.dispose();
   });
 
-  testWidgets('detects wrong text widget', (WidgetTester tester) async {
+  testWidgets('black and white text, without MergeSemantics', (WidgetTester tester) async {
     final SemanticsHandle handle = tester.ensureSemantics();
     await tester.pumpWidget(
         MaterialApp(
@@ -656,7 +656,7 @@ void main() {
               child: Column(
                 children: <Widget>[
                   ExcludeSemantics(
-                    child: const Text('One', style: TextStyle(color: Colors.black))
+                    child: const Text('One', style: TextStyle(color: Colors.black)),
                   ),
                   const SizedBox(height: 30),
                   const Text('One', style: TextStyle(color: Colors.white)),
