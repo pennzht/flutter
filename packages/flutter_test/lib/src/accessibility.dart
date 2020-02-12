@@ -229,6 +229,16 @@ class MinimumTextContrastGuideline extends AccessibilityGuideline {
       bool isBold;
       final String text = (data.label?.isEmpty == true) ? data.value : data.label;
       final List<Element> elements = find.text(text).hitTestable().evaluate().toList();
+
+      // DEBUG STATEMENTS.
+
+      print('Looking for widgets with text $text');
+      if (elements.isEmpty) {
+        print('NOT FOUND');
+      } else {
+        print('Found: $elements');
+      }
+
       Rect paintBounds;
       if (elements.length == 1) {
         final Element element = elements.single;
