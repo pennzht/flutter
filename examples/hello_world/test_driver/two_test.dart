@@ -15,18 +15,22 @@ void main() {
 
     // Connect to the Flutter driver before running any tests.
     setUpAll(() async {
+      print('setting up all...');
       driver = await FlutterDriver.connect();
     });
 
     // Close the connection to the driver after the tests have completed.
     tearDownAll(() async {
+      print('tearing down all...');
       if (driver != null) {
         driver.close();
       }
     });
 
     test('title is correct', () async {
+      print('testing...');
       expect(await driver.getText(titleFinder), 'Hello, world!');
+      print('done!');
     });
   });
 }
