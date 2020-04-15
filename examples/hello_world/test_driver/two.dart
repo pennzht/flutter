@@ -4,7 +4,7 @@
 
 import '../../../dev/benchmarks/macrobenchmarks/lib/src/web/recorder.dart';
 
-
+import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:hello_world/main.dart' as app;
 import '../../../dev/benchmarks/macrobenchmarks/lib/main.dart';
@@ -57,5 +57,5 @@ class HelloWorldApp extends WidgetRecorder {
   static const String benchmarkName = 'helloworldapp';
 
   @override
-  Widget createWidget() => app.mainWidget();
+  Widget createWidget () => app.hello();
 }

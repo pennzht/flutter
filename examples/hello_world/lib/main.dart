@@ -6,10 +6,10 @@ import 'package:flutter/widgets.dart';
 
 void main() =>
   runApp(
-    mainWidget()
+    hello()
   );
 
-Widget mainWidget() {
+Widget hello() {
   return const Center(
     child:
     Text('Hello, world!',
