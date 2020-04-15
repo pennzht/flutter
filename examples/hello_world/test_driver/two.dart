@@ -9,41 +9,18 @@ import 'package:flutter_driver/driver_extension.dart';
 import 'package:hello_world/main.dart' as app;
 import '../../../dev/benchmarks/macrobenchmarks/lib/main.dart';
 
-void main() {
+/* void main() {
   enableFlutterDriverExtension();
 
   app.main();
-}
-
+} */
 
 typedef RecorderFactory = Recorder Function();
 
 Future<void> main() async {
+  enableFlutterDriverExtension();
 
-  /*
-
-  // Check if the benchmark server wants us to run a specific benchmark.
-  final html.HttpRequest request = await requestXhr(
-    '/next-benchmark',
-    method: 'POST',
-    mimeType: 'application/json',
-    sendData: json.encode(benchmarks.keys.toList()),
-  );
-
-  // 404 is expected in the following cases:
-  // - The benchmark is ran using plain `flutter run`, which does not provide "next-benchmark" handler.
-  // - We ran all benchmarks and the benchmark is telling us there are no more benchmarks to run.
-  if (request.status == 404) {
-    _fallbackToManual('The server did not tell us which benchmark to run next.');
-    return;
-  }
-
-  final String benchmarkName = request.responseText;
-
-   */
-
-  final String benchmarkName = 'bench_card_infinite_scroll';
-
+  const String benchmarkName = 'helloworldapp';
 
   print('running benchmark $benchmarkName');
 
@@ -54,45 +31,31 @@ Future<void> main() async {
 Future<void> _runBenchmark(String benchmarkName) async {
 
   print('running benchmark $benchmarkName >>>');
-  final RecorderFactory recorderFactory = benchmarks[benchmarkName];
+  final RecorderFactory recorderFactory = () => HelloWorldApp();
 
-  if (recorderFactory == null) {
-    print('recorderFactory is null');
-    _fallbackToManual('Benchmark $benchmarkName not found.');
-    return;
-  }
   print('recorderFactory is not null');
 
   final Recorder recorder = recorderFactory();
 
   try {
-    print('isInManualMode = $isInManualMode');
     final Profile profile = await recorder.run();
     print('profile = $profile');
     print('profile.toJson() = ${profile.toJson()}');
     print('profile.scoreData = ${profile.scoreData}');
-    print('profile.scoreData[...]/a = ${profile.scoreData["drawFrameDuration"].allValues}');
-    print('profile.scoreData[...]/m = ${profile.scoreData["drawFrameDuration"].measuredValues}');
-    /*
-    if (!isInManualMode) {
-      final html.HttpRequest request = await html.HttpRequest.request(
-        '/profile-data',
-        method: 'POST',
-        mimeType: 'application/json',
-        sendData: json.encode(profile.toJson()),
-      );
-      if (request.status != 200) {
-        throw Exception(
-          'Failed to report profile data to benchmark server. '
-          'The server responded with status code ${request.status}.'
-        );
-      }
-    } else {
-      print(profile);
-    }
 
-     */
   } catch (error, stackTrace) {
     print('error: $error, stackTrace: $stackTrace');
   }
+}
+
+/// Creates an infinite list of Material cards and scrolls it.
+class HelloWorldApp extends WidgetRecorder {
+  // WidgetRecorder.
+
+  HelloWorldApp() : super(name: benchmarkName);
+
+  static const String benchmarkName = 'helloworldapp';
+
+  @override
+  Widget createWidget() => app.mainWidget();
 }
