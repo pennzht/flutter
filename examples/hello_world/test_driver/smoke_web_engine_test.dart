@@ -26,6 +26,7 @@ void main() {
     });
 
     test('title is correct', () async {
+      print('Running test "title is correct"');
       expect(await driver.getText(titleFinder), 'Hello, world!');
     });
   });

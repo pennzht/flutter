@@ -4,10 +4,11 @@
 
 import 'package:flutter/widgets.dart';
 
-void main() =>
+void main() {
   runApp(
-    hello()
+      hello()
   );
+}
 
 Widget hello() {
   return const Center(
