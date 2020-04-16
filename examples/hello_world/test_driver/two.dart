@@ -17,6 +17,8 @@ import 'package:hello_world/main.dart' as app;
 typedef RecorderFactory = Recorder Function();
 
 Future<void> main() async {
+  print('main called');
+
   enableFlutterDriverExtension();
 
   const String benchmarkName = 'helloworldapp';
