@@ -27,6 +27,8 @@ void main() {
 
     test('title is correct', () async {
       print('Running test "title is correct"');
+      final String testdata = await driver.requestData('Test-data');
+      print('Testdata received: $testdata');
       expect(await driver.getText(titleFinder), 'Hello, world!');
     });
   });
