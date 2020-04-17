@@ -21,7 +21,7 @@ Future<String> _handler (String s) async {
 Future<void> main() async {
   messages.add('main called');
 
-  enableFlutterDriverExtension();
+  enableFlutterDriverExtension(handler: _handler);
 
   const String benchmarkName = 'helloworldapp';
 
