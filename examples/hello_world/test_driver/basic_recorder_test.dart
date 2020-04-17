@@ -28,7 +28,7 @@ void main() {
     test('title is correct', () async {
       print('Running test "title is correct"');
       await Future<String>.delayed(
-        /* duration */ Duration(minutes: 5),
+        /* duration */ Duration(seconds: 15),
         /* computation */ () => 'abc',
       );
       final String testData = await driver.requestData('Test-data');
