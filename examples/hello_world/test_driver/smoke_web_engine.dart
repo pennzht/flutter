@@ -9,7 +9,7 @@ import 'package:hello_world/main.dart' as app;
 
 Future<String> _handler (String s) async {
   print('report: $s');
-  return s;
+  return 'report: $s';
 }
 
 void main() {
