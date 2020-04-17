@@ -26,7 +26,7 @@ Future<String> _handler (String s) async {
 Future<void> main() async {
   mprint('main called');
 
-  // enableFlutterDriverExtension(handler: _handler);
+  enableFlutterDriverExtension(handler: _handler);
 
   const String benchmarkName = 'helloworldapp';
 
@@ -50,7 +50,8 @@ Future<void> _runBenchmark(String benchmarkName) async {
 
   try {
     final Profile profile = await recorder.run();
-    mprint(profile.toJson().toString());
+    mprint('success');
+    // mprint(profile.toJson().toString());
   } catch (error, stackTrace) {
     mprint('error: $error, stackTrace: $stackTrace');
   }
@@ -65,5 +66,8 @@ class HelloWorldApp extends WidgetRecorder {
   static const String benchmarkName = 'helloworldapp';
 
   @override
-  Widget createWidget () => app.hello();
+  Widget createWidget () {
+    mprint('Creates widget');
+    return app.hello();
+  }
 }
