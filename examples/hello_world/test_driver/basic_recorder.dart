@@ -45,8 +45,9 @@ Future<void> _runBenchmark(String benchmarkName) async {
 
   try {
     final Profile profile = await recorder.run();
+    messages.add(profile.toJson().toString());
   } catch (error, stackTrace) {
-    print('error: $error, stackTrace: $stackTrace');
+    messages.add('error: $error, stackTrace: $stackTrace');
   }
 }
 

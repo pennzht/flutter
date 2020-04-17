@@ -27,6 +27,10 @@ void main() {
 
     test('title is correct', () async {
       print('Running test "title is correct"');
+      await Future<String>.delayed(
+        /* duration */ Duration(minutes: 5),
+        /* computation */ () => 'abc',
+      );
       final String testData = await driver.requestData('Test-data');
       print('Testdata received: $testData');
       // expect(await driver.getText(titleFinder), 'Hello, world!');
