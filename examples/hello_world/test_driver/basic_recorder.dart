@@ -2,8 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import '../../../dev/benchmarks/macrobenchmarks/lib/src/web/recorder.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:hello_world/main.dart' as app;
+
+typedef RecorderFactory = Recorder Function();
 
 Future<String> _handler (String s) async {
   print('report: $s');
@@ -11,13 +16,43 @@ Future<String> _handler (String s) async {
 }
 
 Future<void> main() async {
-  print('main called\nmain called\nmain called\n');
+  print('main called');
 
-  enableFlutterDriverExtension(handler: _handler);
+  enableFlutterDriverExtension();
 
-  print('line 13\nline 13\nline 13\n');
+  const String benchmarkName = 'helloworldapp';
 
-  app.main();
+  print('running benchmark $benchmarkName');
 
-  print('line 17\nline 17\nline 17\n');
+  await _runBenchmark(benchmarkName);
+  // html.window.location.reload();
+}
+
+Future<void> _runBenchmark(String benchmarkName) async {
+
+  print('running benchmark $benchmarkName >>>');
+
+  final RecorderFactory recorderFactory = () => HelloWorldApp();
+
+  print('recorderFactory is not null');
+
+  final Recorder recorder = recorderFactory();
+
+  try {
+    final Profile profile = await recorder.run();
+  } catch (error, stackTrace) {
+    print('error: $error, stackTrace: $stackTrace');
+  }
+}
+
+/// Creates an infinite list of Material cards and scrolls it.
+class HelloWorldApp extends WidgetRecorder {
+  // WidgetRecorder.
+
+  HelloWorldApp() : super(name: benchmarkName);
+
+  static const String benchmarkName = 'helloworldapp';
+
+  @override
+  Widget createWidget () => app.hello();
 }
