@@ -13,18 +13,19 @@ typedef RecorderFactory = Recorder Function();
 final List<String> messages = <String>[];
 
 Future<String> _handler (String s) async {
-  print('report: $s');
-  return 'report: $s';
+  final String ans = messages.join('\n');
+  messages.clear();
+  return ans;
 }
 
 Future<void> main() async {
-  print('main called');
+  messages.add('main called');
 
   enableFlutterDriverExtension();
 
   const String benchmarkName = 'helloworldapp';
 
-  print('running benchmark $benchmarkName');
+  messages.add('running benchmark $benchmarkName');
 
   messages.add('Initial message');
 
@@ -34,11 +35,11 @@ Future<void> main() async {
 
 Future<void> _runBenchmark(String benchmarkName) async {
 
-  print('running benchmark $benchmarkName >>>');
+  messages.add('running benchmark $benchmarkName >>>');
 
   final RecorderFactory recorderFactory = () => HelloWorldApp();
 
-  print('recorderFactory is not null');
+  messages.add('recorderFactory is not null');
 
   final Recorder recorder = recorderFactory();
 
