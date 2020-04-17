@@ -10,6 +10,8 @@ import 'package:hello_world/main.dart' as app;
 
 typedef RecorderFactory = Recorder Function();
 
+final List<String> messages = <String>[];
+
 Future<String> _handler (String s) async {
   print('report: $s');
   return 'report: $s';
@@ -23,6 +25,8 @@ Future<void> main() async {
   const String benchmarkName = 'helloworldapp';
 
   print('running benchmark $benchmarkName');
+
+  messages.add('Initial message');
 
   await _runBenchmark(benchmarkName);
   // html.window.location.reload();
