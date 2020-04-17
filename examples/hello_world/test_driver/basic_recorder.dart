@@ -10,7 +10,7 @@ Future<String> _handler (String s) async {
   return 'report: $s';
 }
 
-void main() {
+Future<void> main() async {
   print('main called\nmain called\nmain called\n');
 
   enableFlutterDriverExtension(handler: _handler);
