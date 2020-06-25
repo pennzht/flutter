@@ -97,29 +97,48 @@ Future<void> _runBenchmark(String benchmarkName) async {
     return;
   }
 
-  try {
-    final Recorder recorder = recorderFactory();
-    final Runner runner = recorder.isTracingEnabled && !_client.isInManualMode
-      ? Runner(
-          recorder: recorder,
-          setUpAllDidRun: () => _client.startPerformanceTracing(benchmarkName),
-          tearDownAllWillRun: _client.stopPerformanceTracing,
-        )
-      : Runner(recorder: recorder);
+  await runZoned<Future<void>>(
+    () async {
+      final Recorder recorder = recorderFactory();
+      final Runner runner = recorder.isTracingEnabled && !_client.isInManualMode
+          ? Runner(
+              recorder: recorder,
+              setUpAllDidRun: () => _client.startPerformanceTracing(benchmarkName),
+              tearDownAllWillRun: _client.stopPerformanceTracing,
+            )
+          : Runner(recorder: recorder);
 
-    final Profile profile = await runner.run();
-    if (!_client.isInManualMode) {
-      await _client.sendProfileData(profile);
-    } else {
-      _printResultsToScreen(profile);
-      print(profile);
-    }
-  } catch (error, stackTrace) {
-    if (_client.isInManualMode) {
-      rethrow;
-    }
-    await _client.reportError(error, stackTrace);
-  }
+      final Profile profile = await runner.run();
+      if (!_client.isInManualMode) {
+        await _client.sendProfileData(profile);
+      } else {
+        _printResultsToScreen(profile);
+        print(profile);
+      }
+    },
+    zoneSpecification: ZoneSpecification(
+      print: (Zone self, ZoneDelegate parent, Zone zone, String line) async {
+        if (_client.isInManualMode) {
+          parent.print(zone, '[$benchmarkName] $line');
+        } else {
+          await _client.printToConsole(line);
+        }
+      },
+      handleUncaughtError: (
+        Zone self,
+        ZoneDelegate parent,
+        Zone zone, Object error,
+        StackTrace stackTrace,
+      ) async {
+        if (_client.isInManualMode) {
+          parent.print(zone, '[$benchmarkName] $error, $stackTrace');
+          parent.handleUncaughtError(zone, error, stackTrace);
+        } else {
+          await _client.reportError(error, stackTrace);
+        }
+      },
+    ),
+  );
 }
 
 void _fallbackToManual(String error) {
@@ -365,6 +384,17 @@ class LocalBenchmarkServerClient {
         'error': '$error',
         'stackTrace': '$stackTrace',
       }),
+    );
+  }
+
+  /// Reports a message about the demo to the benchmark server.
+  Future<void> printToConsole(String report) async {
+    _checkNotManualMode();
+    await html.HttpRequest.request(
+      '/print-to-console',
+      method: 'POST',
+      mimeType: 'text/plain',
+      sendData: report,
     );
   }
 
