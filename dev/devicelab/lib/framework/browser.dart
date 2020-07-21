@@ -105,6 +105,9 @@ class Chrome {
       '--no-default-browser-check',
       '--disable-default-apps',
       '--disable-translate',
+      '--disable-web-security', // added to allow CORS
+      '--enable-logging=stderr', // added to see errors
+      '--v=1', // added to see errors
     ];
     final io.Process chromeProcess = await io.Process.start(
       _findSystemChromeExecutable(),
@@ -251,17 +254,19 @@ Future<WipConnection> _connectToChromeDebugPort(io.Process chromeProcess, int po
       print('[CHROME]: $line');
     });
 
-  await chromeProcess.stderr
-    .transform(utf8.decoder)
-    .transform(const LineSplitter())
-    .map((String line) {
-      print('[CHROME]: $line');
-      return line;
-    })
-    .firstWhere((String line) => line.startsWith('DevTools listening'), orElse: () {
-      throw Exception('Expected Chrome to print "DevTools listening" string '
-          'with DevTools URL, but the string was never printed.');
-    });
+  final Completer<bool> devToolsReady = Completer<bool>();
+
+  chromeProcess.stderr
+      .transform(utf8.decoder)
+      .transform(const LineSplitter())
+      .listen((String line) {
+    print('[CHROME stderr]: $line');
+    if (line.startsWith('DevTools listening')) {
+      devToolsReady.complete(true);
+    }
+  });
+
+  await devToolsReady.future;
 
   final Uri devtoolsUri = await _getRemoteDebuggerUrl(Uri.parse('http://localhost:$port'));
   print('Connecting to DevTools: $devtoolsUri');
