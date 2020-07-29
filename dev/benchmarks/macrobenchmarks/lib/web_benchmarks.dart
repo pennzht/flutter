@@ -38,32 +38,8 @@ const String _galleryBenchmarkPrefix = 'gallery_v2';
 /// When adding a new benchmark, add it to this map. Make sure that the name
 /// of your benchmark is unique.
 final Map<String, RecorderFactory> benchmarks = <String, RecorderFactory>{
-  BenchCardInfiniteScroll.benchmarkName: () => BenchCardInfiniteScroll.forward(),
-  BenchCardInfiniteScroll.benchmarkNameBackward: () => BenchCardInfiniteScroll.backward(),
-  BenchClippedOutPictures.benchmarkName: () => BenchClippedOutPictures(),
-  BenchDrawRect.benchmarkName: () => BenchDrawRect.staticPaint(),
-  BenchDrawRect.variablePaintBenchmarkName: () => BenchDrawRect.variablePaint(),
-  BenchPathRecording.benchmarkName: () => BenchPathRecording(),
-  BenchTextOutOfPictureBounds.benchmarkName: () => BenchTextOutOfPictureBounds(),
-  BenchSimpleLazyTextScroll.benchmarkName: () => BenchSimpleLazyTextScroll(),
-  BenchBuildMaterialCheckbox.benchmarkName: () => BenchBuildMaterialCheckbox(),
-  BenchDynamicClipOnStaticPicture.benchmarkName: () => BenchDynamicClipOnStaticPicture(),
-  BenchPictureRecording.benchmarkName: () => BenchPictureRecording(),
-  BenchUpdateManyChildLayers.benchmarkName: () => BenchUpdateManyChildLayers(),
-  BenchMouseRegionGridScroll.benchmarkName: () => BenchMouseRegionGridScroll(),
-  BenchMouseRegionGridHover.benchmarkName: () => BenchMouseRegionGridHover(),
-  if (isCanvasKit)
-    BenchBuildColorsGrid.canvasKitBenchmarkName: () => BenchBuildColorsGrid.canvasKit(),
-
   // Benchmarks that we don't want to run using CanvasKit.
   if (!isCanvasKit) ...<String, RecorderFactory>{
-    BenchTextLayout.domBenchmarkName: () => BenchTextLayout(useCanvas: false),
-    BenchTextLayout.canvasBenchmarkName: () => BenchTextLayout(useCanvas: true),
-    BenchTextCachedLayout.domBenchmarkName: () => BenchTextCachedLayout(useCanvas: false),
-    BenchTextCachedLayout.canvasBenchmarkName: () => BenchTextCachedLayout(useCanvas: true),
-    BenchBuildColorsGrid.domBenchmarkName: () => BenchBuildColorsGrid.dom(),
-    BenchBuildColorsGrid.canvasBenchmarkName: () => BenchBuildColorsGrid.canvas(),
-
     // The following benchmark is for the Flutter Gallery.
     // This benchmark is failing when run with CanvasKit, so we skip it
     // for now.
