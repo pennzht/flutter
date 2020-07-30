@@ -48,7 +48,7 @@ final Map<String, RecorderFactory> benchmarks = <String, RecorderFactory>{
       benchmarkName: '${_galleryBenchmarkPrefix}_studies_perf',
       shouldRunPredicate: (String demo) => typeOfDemo(demo) == DemoType.study,
     ),
-    '${_galleryBenchmarkPrefix}_unanimated_perf': () => GalleryRecorder(
+    /*'${_galleryBenchmarkPrefix}_unanimated_perf': () => GalleryRecorder(
       benchmarkName: '${_galleryBenchmarkPrefix}_unanimated_perf',
       shouldRunPredicate: (String demo) => typeOfDemo(demo) == DemoType.unanimatedWidget,
     ),
@@ -59,7 +59,7 @@ final Map<String, RecorderFactory> benchmarks = <String, RecorderFactory>{
     '${_galleryBenchmarkPrefix}_scroll_perf': () => GalleryRecorder(
       benchmarkName: '${_galleryBenchmarkPrefix}_scroll_perf',
       testScrollsOnly: true,
-    ),
+    ),*/
   },
 };
 
